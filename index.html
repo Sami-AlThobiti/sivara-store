@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIVARA | سيفارا - مستقبل الجمال</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=El+Messiri:wght@400;600;700&family=Montserrat:wght@300;400;600&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sivara: {
+                            bg: '#05010a',
+                            surface: '#13051f',
+                            primary: '#ff0055',
+                            accent: '#00f2ea',
+                            gold: '#d4af37',
+                            text: '#e2e8f0',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['El Messiri', 'Cinzel', 'serif'],
+                        body: ['Tajawal', 'Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                        'shimmer': 'shimmer 3s infinite',
+                        'fadeIn': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        glow: {
+                            'from': { boxShadow: '0 0 5px #ff0055' },
+                            'to': { boxShadow: '0 0 20px #ff0055, 0 0 10px #00f2ea' },
+                        },
+                        shimmer: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' }
+                        },
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'translateY(10px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #05010a;
+            color: #e2e8f0;
+            font-family: 'Tajawal', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: 'El Messiri', serif;
+        }
+
+        /* Glass & UI Elements */
+        .glass-nav {
+            background: rgba(5, 1, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(19, 5, 31, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 0, 85, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* Navigation Link Effect */
+        .nav-link {
+            position: relative;
+            white-space: nowrap;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            right: 0; /* RTL */
+            background: linear-gradient(90deg, #ff0055, #00f2ea);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Utilities */
+        .text-gradient {
+            background: linear-gradient(135deg, #ff0055 0%, #00f2ea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .icon-btn:hover { transform: scale(1.1); }
+        .icon-btn:active { transform: scale(0.95); }
+
+        .page-section { display: none; animation: fadeIn 0.5s ease-out forwards; }
+        .page-section.active { display: block; }
+
+        /* Accordion for FAQ */
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .accordion-item.active .accordion-content { max-height: 200px; }
+        .accordion-item.active .ph-caret-down { transform: rotate(180deg); }
+
+        #loader { position: fixed; inset: 0; z-index: 9999; background: #05010a; display: flex; justify-content: center; align-items: center; }
+    </style>
+</head>
+<body class="antialiased selection:bg-sivara-primary selection:text-white">
+
+    <!-- Preloader -->
+    <div id="loader">
+        <div class="relative flex flex-col items-center">
+            <div class="w-24 h-24 border-t-2 border-b-2 border-sivara-primary rounded-full animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-2xl font-heading font-bold text-white tracking-widest">S</span>
+            </div>
+            <p class="mt-4 text-sivara-accent text-sm tracking-[0.5em] animate-pulse">LOADING</p>
+        </div>
+    </div>
+
+    <!-- Background Ambient Light -->
+    <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div class="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-sivara-primary/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-sivara-accent/10 rounded-full blur-[120px]"></div>
+    </div>
+
+    <!-- HEADER SECTION -->
+    <header class="fixed top-0 w-full z-50 transition-all duration-300" id="main-header">
+        
+        <!-- Top Notification Bar & Services Links -->
+        <div class="bg-[#1a0524] border-b border-white/5 h-9 flex items-center justify-center md:justify-between px-4 text-[10px] md:text-xs font-bold tracking-wide text-gray-400">
+            <div class="hidden md:flex gap-6">
+                 <button onclick="showPage('track')" class="hover:text-sivara-accent transition-colors flex items-center gap-1"><i class="ph-fill ph-package"></i> تتبع الطلب</button>
+                 <button onclick="showPage('shipping')" class="hover:text-sivara-accent transition-colors">الشحن والتوصيل</button>
+                 <button onclick="showPage('returns')" class="hover:text-sivara-accent transition-colors">سياسة الاسترجاع</button>
+                 <button onclick="showPage('faq')" class="hover:text-sivara-accent transition-colors">الأسئلة الشائعة</button>
+            </div>
+            <div class="flex gap-4 items-center">
+                <span class="text-sivara-primary animate-pulse">✨ خصم 15% كود: NEW2026</span>
+                <span class="hidden md:inline">|</span>
+                <span class="hidden md:inline hover:text-white cursor-pointer">English</span>
+            </div>
+        </div>
+
+        <!-- Main Navbar -->
+        <nav class="glass-nav px-4 md:px-8 py-3 transition-all duration-300" id="navbar-inner">
+            <div class="container mx-auto flex justify-between items-center gap-4">
+                
+                <!-- Logo -->
+                <a href="#" onclick="showPage('home')" class="group flex items-center gap-2 relative z-10 shrink-0">
+                    <div class="relative w-9 h-9 flex items-center justify-center bg-white/5 rounded-full border border-white/10 group-hover:border-sivara-primary/50 transition-colors overflow-hidden">
+                        <span class="font-heading font-bold text-lg text-white group-hover:text-sivara-primary transition-colors">S</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-heading font-bold tracking-wide text-white leading-none">SIVARA</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu (Expanded Pill) -->
+                <div class="hidden lg:flex items-center bg-white/5 backdrop-blur-md border border-white/5 rounded-full px-2 py-1 shadow-lg shadow-black/20 overflow-x-auto hide-scrollbar max-w-[700px]">
+                    <button onclick="showPage('home')" class="nav-link active px-4 py-2 text-xs font-bold text-gray-300 hover:text-white transition-colors" data-target="home">الرئيسية</button>
+                    <button onclick="showPage('shop', 'all')" class="nav-link px-4 py-2 text-xs font-bold text-gray-300 hover:text-white transition-colors" data-target="shop">المتجر</button>
+                    
+                    <div class="w-[1px] h-3 bg-white/10 mx-1"></div>
+                    
+                    <button onclick="showPage('shop', 'new')" class="nav-link px-4 py-2 text-xs font-bold text-sivara-accent hover:text-white transition-colors" data-target="new">وصل حديثاً</button>
+                    <button onclick="showPage('shop', 'best')" class="nav-link px-4 py-2 text-xs font-bold text-gray-300 hover:text-white transition-colors" data-target="best">الأكثر مبيعاً</button>
+                    <button onclick="showPage('shop', 'offers')" class="nav-link px-4 py-2 text-xs font-bold text-sivara-primary hover:text-white transition-colors" data-target="offers">العروض</button>
+                    
+                    <div class="w-[1px] h-3 bg-white/10 mx-1"></div>
+
+                    <button onclick="showPage('blog')" class="nav-link px-4 py-2 text-xs font-bold text-gray-300 hover:text-white transition-colors" data-target="blog">المدونة</button>
+                </div>
+
+                <!-- Action Icons -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <button class="w-9 h-9 rounded-full flex items-center justify-center text-gray-300 hover:bg-white/10 hover:text-white transition-all icon-btn">
+                        <i class="ph ph-magnifying-glass text-lg"></i>
+                    </button>
+                    <button class="w-9 h-9 rounded-full flex items-center justify-center text-gray-300 hover:bg-white/10 hover:text-sivara-primary transition-all icon-btn relative" onclick="toggleCart()">
+                        <i class="ph ph-shopping-cart text-lg"></i>
+                        <span id="cart-count" class="absolute top-1 right-1 w-2 h-2 bg-sivara-accent rounded-full border-2 border-[#05010a] hidden"></span>
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button class="lg:hidden w-9 h-9 rounded-full flex items-center justify-center text-white bg-white/10 hover:bg-sivara-primary hover:text-white transition-all icon-btn">
+                        <i class="ph ph-list text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Horizontal Menu -->
+            <div class="lg:hidden mt-3 flex gap-4 overflow-x-auto pb-2 px-2 hide-scrollbar border-t border-white/5 pt-2">
+                <button onclick="showPage('shop', 'new')" class="whitespace-nowrap text-xs font-bold text-sivara-accent bg-white/5 px-3 py-1.5 rounded-full">وصل حديثاً</button>
+                <button onclick="showPage('shop', 'offers')" class="whitespace-nowrap text-xs font-bold text-sivara-primary bg-white/5 px-3 py-1.5 rounded-full">عروض خاصة</button>
+                <button onclick="showPage('track')" class="whitespace-nowrap text-xs text-gray-400">تتبع الطلب</button>
+                <button onclick="showPage('blog')" class="whitespace-nowrap text-xs text-gray-400">المدونة</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed inset-y-0 left-0 w-full md:w-96 bg-[#0a0212] border-r border-white/10 z-[60] transform -translate-x-full transition-transform duration-300 shadow-2xl flex flex-col backdrop-blur-xl">
+        <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
+            <h3 class="text-xl font-heading font-bold text-white flex items-center gap-2">
+                <i class="ph-duotone ph-shopping-bag text-sivara-primary"></i> سلة المشتريات
+            </h3>
+            <button onclick="toggleCart()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-red-500/20 hover:text-red-500 flex items-center justify-center transition-colors">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cart-items">
+            <!-- Items injected here -->
+        </div>
+        <div class="p-6 border-t border-white/5 bg-black/40">
+            <div class="flex justify-between items-center mb-4 text-lg font-bold">
+                <span class="text-gray-400">المجموع:</span>
+                <span id="cart-total" class="text-2xl font-mono text-white">0 ر.س</span>
+            </div>
+            <button class="w-full py-4 bg-gradient-to-r from-sivara-primary to-[#d10046] text-white font-bold rounded-xl shadow-[0_0_20px_rgba(255,0,85,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 flex justify-center items-center gap-2 group">
+                <span>إتمام الشراء</span>
+                <i class="ph-bold ph-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+            </button>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[55] hidden transition-opacity"></div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="pt-40 min-h-screen">
+
+        <!-- ================= PAGE: HOME ================= -->
+        <section id="home" class="page-section active">
+            <!-- Hero Banner -->
+            <div class="relative container mx-auto px-4 md:px-8 h-[65vh] flex items-center rounded-[2rem] overflow-hidden my-4 border border-white/10 shadow-2xl">
+                <div class="absolute inset-0">
+                    <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover opacity-60 hover:scale-105 transition-transform duration-[10s]" alt="Sivara Hero">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#05010a] via-[#05010a]/80 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_4s_infinite]"></div>
+                </div>
+                <div class="relative z-10 max-w-2xl p-8 md:p-16">
+                    <div class="flex items-center gap-3 mb-6 animate-fadeIn">
+                        <span class="h-[1px] w-10 bg-sivara-accent"></span>
+                        <span class="text-sivara-accent text-xs font-bold tracking-[0.2em] uppercase shadow-[0_0_15px_rgba(0,242,234,0.3)]">New Collection 2026</span>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6 text-white drop-shadow-lg animate-fadeIn" style="animation-delay: 0.2s">
+                        اكتشفي بُعداً آخر <br>
+                        <span class="text-gradient font-heading italic">للجمال والتقنية</span>
+                    </h1>
+                    <div class="flex gap-4 animate-fadeIn" style="animation-delay: 0.4s">
+                        <button onclick="showPage('shop', 'all')" class="px-8 py-3 bg-sivara-primary text-white font-bold rounded-xl hover:bg-white hover:text-black transition-all shadow-[0_0_30px_rgba(255,0,85,0.4)] transform hover:-translate-y-1">
+                            تسوقي الآن
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Links Grid -->
+            <div class="container mx-auto px-4 py-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div onclick="showPage('shop', 'new')" class="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl p-6 text-center transition-all group">
+                    <i class="ph-duotone ph-sparkle text-4xl text-sivara-accent mb-2 group-hover:scale-110 transition-transform block"></i>
+                    <h3 class="font-bold text-white">وصل حديثاً</h3>
+                </div>
+                <div onclick="showPage('shop', 'best')" class="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl p-6 text-center transition-all group">
+                    <i class="ph-duotone ph-fire text-4xl text-sivara-primary mb-2 group-hover:scale-110 transition-transform block"></i>
+                    <h3 class="font-bold text-white">الأكثر مبيعاً</h3>
+                </div>
+                <div onclick="showPage('shop', 'offers')" class="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl p-6 text-center transition-all group">
+                    <i class="ph-duotone ph-percent text-4xl text-yellow-400 mb-2 group-hover:scale-110 transition-transform block"></i>
+                    <h3 class="font-bold text-white">عروض خاصة</h3>
+                </div>
+                <div onclick="showPage('blog')" class="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl p-6 text-center transition-all group">
+                    <i class="ph-duotone ph-article text-4xl text-purple-400 mb-2 group-hover:scale-110 transition-transform block"></i>
+                    <h3 class="font-bold text-white">المدونة</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE: SHOP (Handles All Products/New/Offers/Best) ================= -->
+        <section id="shop" class="page-section container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+                <h2 class="text-4xl font-heading font-bold flex items-center gap-3">
+                    <span class="w-2 h-8 bg-sivara-primary rounded-full block"></span> <span id="shop-title">المتجر</span>
+                </h2>
+                
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-2 justify-center bg-white/5 p-1 rounded-full backdrop-blur-sm">
+                    <button onclick="filterProducts('all')" class="filter-btn active px-4 py-2 rounded-full text-sm font-bold transition-all bg-sivara-primary text-white">الكل</button>
+                    <button onclick="filterProducts('makeup')" class="filter-btn px-4 py-2 rounded-full text-sm font-bold transition-all text-gray-400 hover:text-white">مكياج</button>
+                    <button onclick="filterProducts('hair')" class="filter-btn px-4 py-2 rounded-full text-sm font-bold transition-all text-gray-400 hover:text-white">شعر</button>
+                    <button onclick="filterProducts('care')" class="filter-btn px-4 py-2 rounded-full text-sm font-bold transition-all text-gray-400 hover:text-white">عناية</button>
+                    <button onclick="filterProducts('offers')" class="filter-btn px-4 py-2 rounded-full text-sm font-bold transition-all text-sivara-primary hover:text-white border border-sivara-primary/30">عروض</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Javascript will populate this -->
+            </div>
+        </section>
+
+        <!-- ================= PAGE: BLOG ================= -->
+        <section id="blog" class="page-section container mx-auto px-4 py-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-heading font-bold text-white mb-4">مدونة سيفارا</h2>
+                <p class="text-gray-400">أحدث نصائح الجمال، العناية بالبشرة، واتجاهات التكنولوجيا.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden group cursor-pointer">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdd403348?q=80&w=1974" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-4 right-4 bg-sivara-primary text-white text-xs px-3 py-1 rounded-full">مكياج</span>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-sivara-muted">5 يناير 2026</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3 group-hover:text-sivara-accent transition-colors">كيف تختارين كريم الأساس المناسب لبشرتك؟</h3>
+                        <p class="text-gray-400 text-sm line-clamp-2">دليلك الشامل لمعرفة نوع بشرتك والدرجة المثالية التي تبرز جمالك الطبيعي...</p>
+                        <button class="mt-4 text-sivara-accent text-sm font-bold flex items-center gap-1">اقرأ المزيد <i class="ph-bold ph-arrow-left"></i></button>
+                    </div>
+                </div>
+                <!-- Blog Post 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden group cursor-pointer">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1974" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-4 right-4 bg-purple-500 text-white text-xs px-3 py-1 rounded-full">شعر</span>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-sivara-muted">2 يناير 2026</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3 group-hover:text-sivara-accent transition-colors">ثورة دايسون في عالم تصفيف الشعر</h3>
+                        <p class="text-gray-400 text-sm line-clamp-2">لماذا يعتبر Dyson Airwrap استثماراً حقيقياً لصحة وجمال شعرك؟ تقرير مفصل...</p>
+                        <button class="mt-4 text-sivara-accent text-sm font-bold flex items-center gap-1">اقرأ المزيد <i class="ph-bold ph-arrow-left"></i></button>
+                    </div>
+                </div>
+                 <!-- Blog Post 3 -->
+                 <div class="glass-card rounded-2xl overflow-hidden group cursor-pointer">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1974" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-4 right-4 bg-teal-500 text-white text-xs px-3 py-1 rounded-full">عناية</span>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-sivara-muted">28 ديسمبر 2025</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3 group-hover:text-sivara-accent transition-colors">روتين العناية المسائي للمرأة العاملة</h3>
+                        <p class="text-gray-400 text-sm line-clamp-2">خطوات بسيطة وسريعة للحفاظ على نضارة بشرتك بعد يوم عمل طويل وشاق...</p>
+                        <button class="mt-4 text-sivara-accent text-sm font-bold flex items-center gap-1">اقرأ المزيد <i class="ph-bold ph-arrow-left"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE: TRACK ORDER ================= -->
+        <section id="track" class="page-section container mx-auto px-4 py-8">
+            <div class="max-w-2xl mx-auto glass-card p-8 md:p-12 rounded-3xl border border-white/10">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-sivara-accent">
+                        <i class="ph-duotone ph-package text-3xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-heading font-bold text-white">تتبع طلبك</h2>
+                    <p class="text-gray-400 mt-2">ادخلي رقم الطلب المرسل إلى جوالك أو بريدك الإلكتروني.</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">رقم الطلب</label>
+                        <input type="text" placeholder="مثال: #SIV-1024" class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sivara-primary focus:ring-1 focus:ring-sivara-primary transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">رقم الجوال / البريد الإلكتروني</label>
+                        <input type="text" placeholder="أدخلي البيانات" class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sivara-primary focus:ring-1 focus:ring-sivara-primary transition-all">
+                    </div>
+                    <button class="w-full bg-sivara-primary text-white font-bold py-4 rounded-xl hover:bg-white hover:text-black transition-all shadow-lg mt-4">
+                        تتبع الآن
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE: SHIPPING ================= -->
+        <section id="shipping" class="page-section container mx-auto px-4 py-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-heading font-bold text-white mb-8 border-b border-white/10 pb-4">الشحن والتوصيل</h2>
+                <div class="grid gap-6">
+                    <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center shrink-0 text-sivara-accent">
+                            <i class="ph-duotone ph-truck text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">التوصيل داخل الرياض</h3>
+                            <p class="text-gray-400 leading-relaxed">يتم التوصيل خلال 24 ساعة من تأكيد الطلب. رسوم التوصيل 25 ر.س، ومجاناً للطلبات فوق 500 ر.س.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center shrink-0 text-sivara-primary">
+                            <i class="ph-duotone ph-airplane-tilt text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">باقي مدن المملكة</h3>
+                            <p class="text-gray-400 leading-relaxed">عبر شركات الشحن (أرامكس، سمسا). يستغرق التوصيل من 2-4 أيام عمل. رسوم الشحن 35 ر.س.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center shrink-0 text-yellow-500">
+                            <i class="ph-duotone ph-globe text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">الشحن الدولي</h3>
+                            <p class="text-gray-400 leading-relaxed">نشحن حالياً لدول الخليج (الإمارات، الكويت، البحرين، عمان، قطر). التوصيل خلال 5-7 أيام عمل.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE: RETURNS ================= -->
+        <section id="returns" class="page-section container mx-auto px-4 py-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-heading font-bold text-white mb-8 border-b border-white/10 pb-4">سياسة الاسترجاع والاستبدال</h2>
+                <div class="space-y-6 text-gray-300 leading-loose">
+                    <p>في <strong>سيفارا</strong>، رضاكم هو أولويتنا. إذا لم تكونوا راضين تماماً عن مشترياتكم، يمكنكم استرجاعها أو استبدالها وفق الشروط التالية:</p>
+                    <ul class="list-disc list-inside space-y-2 bg-white/5 p-6 rounded-2xl border border-white/5">
+                        <li>يمكن إرجاع المنتجات خلال <strong>7 أيام</strong> من تاريخ الاستلام.</li>
+                        <li>يجب أن يكون المنتج في حالته الأصلية، غير مستخدم، وبغلافه الأصلي غير المفتوح.</li>
+                        <li>لا يمكن استرجاع مستحضرات التجميل ومنتجات العناية الشخصية المفتوحة لأسباب صحية.</li>
+                        <li>يتحمل العميل تكاليف شحن الاسترجاع إلا في حال وجود عيب مصنعي أو خطأ في الطلب.</li>
+                        <li>يتم استرداد المبلغ إلى نفس وسيلة الدفع المستخدمة خلال 7-14 يوم عمل.</li>
+                    </ul>
+                    <div class="mt-8 text-center">
+                        <button class="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-xl transition-colors">
+                            تقديم طلب استرجاع
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE: FAQ ================= -->
+        <section id="faq" class="page-section container mx-auto px-4 py-8">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-4xl font-heading font-bold text-center text-white mb-10">الأسئلة الشائعة</h2>
+                
+                <div class="space-y-4">
+                    <!-- Q1 -->
+                    <div class="accordion-item glass-card rounded-xl overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                        <div class="p-6 flex justify-between items-center">
+                            <h3 class="font-bold text-white">هل المنتجات أصلية 100%؟</h3>
+                            <i class="ph-bold ph-caret-down text-gray-400 transition-transform duration-300"></i>
+                        </div>
+                        <div class="accordion-content bg-black/20">
+                            <div class="p-6 pt-0 text-gray-400">
+                                نعم، في سيفارا نضمن أن جميع منتجاتنا أصلية 100% ومستوردة مباشرة من الوكلاء المعتمدين والماركات العالمية.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="accordion-item glass-card rounded-xl overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                        <div class="p-6 flex justify-between items-center">
+                            <h3 class="font-bold text-white">ما هي طرق الدفع المتوفرة؟</h3>
+                            <i class="ph-bold ph-caret-down text-gray-400 transition-transform duration-300"></i>
+                        </div>
+                        <div class="accordion-content bg-black/20">
+                            <div class="p-6 pt-0 text-gray-400">
+                                نوفر طرق دفع متعددة تشمل: مدى، فيزا، ماستركارد، Apple Pay، وخدمة التقسيط عبر تابي وتمارا، بالإضافة للدفع عند الاستلام في بعض المدن.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="accordion-item glass-card rounded-xl overflow-hidden cursor-pointer" onclick="toggleAccordion(this)">
+                        <div class="p-6 flex justify-between items-center">
+                            <h3 class="font-bold text-white">هل يوجد ضمان على الأجهزة؟</h3>
+                            <i class="ph-bold ph-caret-down text-gray-400 transition-transform duration-300"></i>
+                        </div>
+                        <div class="accordion-content bg-black/20">
+                            <div class="p-6 pt-0 text-gray-400">
+                                نعم، جميع الأجهزة الإلكترونية (مثل دايسون وفوريو) مشمولة بضمان الوكيل لمدة سنتين ضد العيوب المصنعية.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE: PRODUCT DETAILS MODAL ================= -->
+        <div id="product-modal" class="fixed inset-0 z-[100] hidden">
+            <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeProductModal()"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl bg-[#13051f] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row h-[90vh] md:h-auto animate-fadeIn">
+                <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 text-white hover:text-sivara-primary bg-black/50 rounded-full p-2 icon-btn"><i class="ph-bold ph-x"></i></button>
+                <div class="w-full md:w-1/2 bg-gray-900 relative group">
+                    <img id="modal-img" src="" class="w-full h-full object-cover" alt="">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+                <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center overflow-y-auto">
+                    <span id="modal-category" class="text-sivara-accent text-xs font-bold tracking-widest mb-2 uppercase border border-sivara-accent/30 self-start px-2 py-1 rounded">Category</span>
+                    <h2 id="modal-title" class="text-3xl font-heading font-bold text-white mb-4 leading-tight">Product Name</h2>
+                    <div class="flex items-center gap-2 mb-6 text-sm">
+                        <div class="flex text-yellow-500"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i></div>
+                        <span class="text-gray-400">(128 تقييم)</span>
+                    </div>
+                    <p id="modal-desc" class="text-gray-300 leading-relaxed mb-8">وصف المنتج التفصيلي يظهر هنا...</p>
+                    <div class="flex items-center justify-between mb-8 pb-8 border-b border-white/10">
+                        <span id="modal-price" class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sivara-primary to-white font-mono">0 ر.س</span>
+                        <div class="flex items-center gap-3 border border-white/20 rounded-lg p-1 bg-white/5">
+                            <button class="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded icon-btn">-</button>
+                            <span class="font-bold w-6 text-center text-white">1</span>
+                            <button class="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded icon-btn">+</button>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="addToCartFromModal()" class="flex-1 py-4 bg-sivara-primary text-white font-bold rounded-lg hover:bg-sivara-primary/80 transition-all shadow-lg shadow-sivara-primary/20 transform hover:scale-105 active:scale-95 flex justify-center items-center gap-2">
+                            <i class="ph-bold ph-bag"></i> إضافة للسلة
+                        </button>
+                        <button class="w-14 flex items-center justify-center border border-white/20 rounded-lg hover:border-sivara-primary hover:text-sivara-primary transition-colors icon-btn">
+                            <i class="ph-fill ph-heart text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="relative bg-[#020005] border-t border-sivara-primary/20 pt-24 pb-12 overflow-hidden">
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-sivara-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute top-0 left-0 w-[400px] h-[400px] bg-sivara-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- Newsletter -->
+            <div class="bg-gradient-to-r from-sivara-surface to-[#1a082b] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between mb-20 border border-white/5 shadow-2xl">
+                <div class="mb-6 md:mb-0 md:w-1/2">
+                    <h3 class="text-3xl font-heading font-bold text-white mb-2">انضمي لعالم سيفارا</h3>
+                    <p class="text-gray-400">احصلي على خصم 10% على أول طلب عند الاشتراك في نشرتنا.</p>
+                </div>
+                <div class="w-full md:w-1/2 flex gap-2">
+                    <input type="email" placeholder="بريدك الإلكتروني" class="flex-1 bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-sivara-primary transition-colors">
+                    <button class="bg-sivara-primary text-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-black transition-colors whitespace-nowrap">
+                        اشتراك
+                    </button>
+                </div>
+            </div>
+
+            <!-- Footer Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-6">
+                    <a href="#" class="flex items-center gap-2 text-3xl font-heading font-bold italic tracking-wide text-white">
+                        <span>SIVARA</span>
+                        <span class="text-sivara-primary">|</span>
+                        <span>سيفارا</span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed">وجهتك الأولى للجمال والذكاء. نؤمن بأن التكنولوجيا خلقت لتبرز جمالك، لا لتخفيه.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 font-heading text-lg">اكتشفي</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" onclick="showPage('shop', 'new')" class="hover:text-sivara-primary transition-colors">وصل حديثاً</a></li>
+                        <li><a href="#" onclick="showPage('shop', 'best')" class="hover:text-sivara-primary transition-colors">الأكثر مبيعاً</a></li>
+                        <li><a href="#" onclick="showPage('shop', 'offers')" class="hover:text-sivara-primary transition-colors">العروض الخاصة</a></li>
+                        <li><a href="#" onclick="showPage('blog')" class="hover:text-sivara-primary transition-colors">المدونة</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 font-heading text-lg">المساعدة</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" onclick="showPage('track')" class="hover:text-sivara-primary transition-colors">تتبع الطلب</a></li>
+                        <li><a href="#" onclick="showPage('shipping')" class="hover:text-sivara-primary transition-colors">الشحن والتوصيل</a></li>
+                        <li><a href="#" onclick="showPage('returns')" class="hover:text-sivara-primary transition-colors">سياسة الاسترجاع</a></li>
+                        <li><a href="#" onclick="showPage('faq')" class="hover:text-sivara-primary transition-colors">الأسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 font-heading text-lg">تواصل معنا</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-whatsapp-logo text-sivara-accent text-lg"></i><span>+966 55 123 4567</span></li>
+                        <li class="flex items-center gap-3"><i class="ph-fill ph-envelope-simple text-sivara-primary text-lg"></i><span>hello@sivara.sa</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
+                <p>&copy; 2026 SIVARA. صنع بحب وإبداع.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA: Expanded Products with Features (New/Best/Offer) ---
+        const products = [
+            { id: 101, name: "Huda Beauty Rose Quartz", price: 280, category: "makeup", sub: "cosmetic", image: "https://images.unsplash.com/photo-1596462502278-27bfdd403348?q=80&w=1974", desc: "باليت ظلال عيون بألوان مستوحاة من الكريستال.", isNew: true, isBest: true },
+            { id: 102, name: "Charlotte Tilbury Lipstick", price: 150, category: "makeup", sub: "cosmetic", image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&w=2030", desc: "أحمر شفاه بيلو توك الشهير، لمسة نهائية مطفية.", isNew: false, isBest: true },
+            { id: 103, name: "Fenty Beauty Foundation", price: 190, category: "makeup", sub: "cosmetic", image: "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?q=80&w=2070", desc: "كريم أساس بتغطية كاملة ومظهر طبيعي.", isNew: true, isBest: false },
+            { id: 104, name: "NARS Blush Orgasm", price: 160, category: "makeup", sub: "cosmetic", image: "https://images.unsplash.com/photo-1515688594390-b649af70d282?q=80&w=2006", desc: "البلاشر الأكثر مبيعاً عالمياً.", isNew: false, isBest: true },
+            
+            { id: 201, name: "Pro Brush Set 12pcs", price: 350, category: "makeup-tool", sub: "tool", image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1935", desc: "مجموعة فرش احترافية ناعمة جداً.", isNew: false, discount: 15 },
+            { id: 202, name: "Beauty Blender Trio", price: 90, category: "makeup-tool", sub: "tool", image: "https://images.unsplash.com/photo-1571212515416-f63144673894?q=80&w=2071", desc: "اسفنجات دمج لمظهر بشرة مثالي.", isNew: true, isBest: false },
+            { id: 203, name: "LED Makeup Mirror", price: 220, category: "makeup-tool", sub: "tool", image: "https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=2128", desc: "مرآة مكياج بإضاءة ذكية ومكبرة.", isNew: false, discount: 10 },
+            
+            { id: 301, name: "Olaplex No.3 Perfector", price: 140, category: "hair", sub: "care", image: "https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=1974", desc: "معالج الشعر التالف رقم 1 في العالم.", isNew: true, isBest: true },
+            { id: 302, name: "Kerastase Hair Oil", price: 210, category: "hair", sub: "care", image: "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?q=80&w=2080", desc: "زيت مغذي للشعر للمعان فائق.", isNew: false, isBest: false },
+            { id: 303, name: "Organic Shampoo", price: 85, category: "hair", sub: "care", image: "https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?q=80&w=2670", desc: "شامبو خالي من السلفات.", isNew: false, discount: 20 },
+
+            { id: 401, name: "Dyson Airwrap™", price: 2499, category: "hair-tool", sub: "tool", image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1974", desc: "مصفف الشعر الأكثر تطوراً بتكنولوجيا كواندا.", isNew: true, isBest: true, discount: 5 },
+            { id: 402, name: "Dyson Corrale™", price: 1999, category: "hair-tool", sub: "tool", image: "https://images.unsplash.com/photo-1561212026-acd9f9e5783c?q=80&w=1974", desc: "مملس الشعر الوحيد بألواح مرنة.", isNew: false, isBest: true },
+            
+            { id: 501, name: "Foreo UFO 2", price: 980, category: "tech", sub: "device", image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070", desc: "جهاز الماسك الذكي مع العلاج بالضوء.", isNew: false, discount: 25 },
+            { id: 502, name: "The Ordinary Set", price: 120, category: "care", sub: "skin", image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1974", desc: "مجموعة السيروم المقشر.", isNew: true, isBest: true },
+            { id: 503, name: "CeraVe Moisturizer", price: 70, category: "care", sub: "skin", image: "https://images.unsplash.com/photo-1556228720-1987df2a76b9?q=80&w=2028", desc: "مرطب للبشرة الجافة.", isNew: false, isBest: true }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+            }, 1000);
+            renderProducts();
+        });
+
+        // Toggle Accordion for FAQ
+        function toggleAccordion(element) {
+            const wasActive = element.classList.contains('active');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+            if (!wasActive) element.classList.add('active');
+        }
+
+        // Navigation
+        function showPage(pageId, filter = null) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active', 'text-white'));
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            // Highlight nav link
+            const targetAttr = filter ? filter : pageId;
+            const navLink = document.querySelector(`.nav-link[data-target="${targetAttr}"]`);
+            if (navLink) {
+                navLink.classList.add('active', 'text-white');
+            } else if (pageId === 'shop') {
+                document.querySelector(`.nav-link[data-target="shop"]`).classList.add('active', 'text-white');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (pageId === 'shop' && filter) {
+                filterProducts(filter);
+            }
+        }
+
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Update Title
+            const titles = {
+                'all': 'المتجر', 'makeup': 'مكياج', 'hair': 'عناية بالشعر', 
+                'care': 'عناية وبشرة', 'tech': 'أجهزة ذكية', 
+                'new': 'وصل حديثاً', 'best': 'الأكثر مبيعاً', 'offers': 'عروض خاصة'
+            };
+            document.getElementById('shop-title').innerText = titles[category] || 'المتجر';
+
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-sivara-primary', 'text-white');
+                btn.classList.add('text-gray-400');
+            });
+            // Try to highlight matching button if exists
+            const activeBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.getAttribute('onclick').includes(`'${category}'`));
+            if(activeBtn) {
+                activeBtn.classList.add('bg-sivara-primary', 'text-white');
+                activeBtn.classList.remove('text-gray-400');
+            }
+
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            
+            let filtered = products;
+            
+            // Logic for new/best/offers special filters
+            if (currentFilter === 'new') {
+                filtered = products.filter(p => p.isNew);
+            } else if (currentFilter === 'best') {
+                filtered = products.filter(p => p.isBest);
+            } else if (currentFilter === 'offers') {
+                filtered = products.filter(p => p.discount);
+            } else if (currentFilter !== 'all') {
+                // Category filtering
+                if (currentFilter === 'makeup') filtered = products.filter(p => p.category === 'makeup');
+                else if (currentFilter === 'hair') filtered = products.filter(p => p.category === 'hair');
+                else filtered = products.filter(p => p.category === currentFilter);
+            }
+
+            let delay = 0;
+            filtered.forEach(p => {
+                const card = `
+                    <div class="glass-card rounded-xl overflow-hidden group relative animate-fadeIn" style="animation-delay: ${delay}ms">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="${p.name}">
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-3 right-3 flex flex-col gap-1">
+                                ${p.isNew ? '<span class="bg-sivara-primary text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg">NEW</span>' : ''}
+                                ${p.discount ? `<span class="bg-yellow-500 text-black text-[10px] font-bold px-2 py-1 rounded shadow-lg">-${p.discount}%</span>` : ''}
+                            </div>
+                            
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                                <button onclick="addToCart(${p.id})" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-sivara-primary hover:bg-sivara-primary hover:text-white transition-all transform hover:scale-125 icon-btn shadow-xl">
+                                    <i class="ph-bold ph-shopping-cart-simple text-xl"></i>
+                                </button>
+                                <button onclick="openProductModal(${p.id})" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black hover:bg-sivara-accent hover:text-black transition-all transform hover:scale-125 icon-btn shadow-xl">
+                                    <i class="ph-bold ph-eye text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 class="font-bold text-white truncate text-sm md:text-base group-hover:text-sivara-primary transition-colors">${p.name}</h3>
+                                    <p class="text-[10px] text-sivara-muted uppercase tracking-wider mt-0.5">${p.category.replace('-', ' ')}</p>
+                                </div>
+                                <div class="text-left">
+                                    ${p.discount 
+                                        ? `<span class="text-gray-500 text-xs line-through block">${p.price}</span><span class="text-sivara-accent font-mono font-bold text-sm">${Math.round(p.price * (100-p.discount)/100)} ر.س</span>` 
+                                        : `<span class="text-sivara-accent font-mono font-bold text-sm">${p.price} ر.س</span>`
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+                delay += 50;
+            });
+            
+            if (filtered.length === 0) {
+                 grid.innerHTML = `<div class="col-span-4 text-center py-20 text-gray-500 flex flex-col items-center"><i class="ph-duotone ph-magnifying-glass text-4xl mb-2 opacity-50"></i><p>لا توجد منتجات مطابقة حالياً</p></div>`;
+            }
+        }
+
+        // Cart & Modal logic
+        let selectedProduct = null;
+        function openProductModal(id) {
+            selectedProduct = products.find(p => p.id === id);
+            if(!selectedProduct) return;
+            document.getElementById('modal-img').src = selectedProduct.image;
+            document.getElementById('modal-title').innerText = selectedProduct.name;
+            const price = selectedProduct.discount ? Math.round(selectedProduct.price * (100-selectedProduct.discount)/100) : selectedProduct.price;
+            document.getElementById('modal-price').innerText = price + ' ر.س';
+            document.getElementById('modal-category').innerText = selectedProduct.category;
+            document.getElementById('modal-desc').innerText = selectedProduct.desc;
+            document.getElementById('product-modal').classList.remove('hidden');
+        }
+        function closeProductModal() { document.getElementById('product-modal').classList.add('hidden'); }
+        function addToCartFromModal() { if(selectedProduct) { addToCart(selectedProduct.id); closeProductModal(); }}
+        
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            if (existing) existing.quantity++; else cart.push({ ...product, quantity: 1 });
+            updateCartUI();
+            toggleCart();
+        }
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const countBadge = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total');
+            const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+            countBadge.innerText = totalItems;
+            countBadge.classList.toggle('hidden', totalItems === 0);
+            
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-center text-gray-500 opacity-60"><i class="ph-duotone ph-shopping-cart text-6xl mb-4 text-sivara-muted/30"></i><p>السلة فارغة حالياً</p></div>`;
+                totalEl.innerText = '0 ر.س';
+                return;
+            }
+            container.innerHTML = '';
+            let totalPrice = 0;
+            cart.forEach((item, index) => {
+                const finalPrice = item.discount ? Math.round(item.price * (100-item.discount)/100) : item.price;
+                totalPrice += finalPrice * item.quantity;
+                container.innerHTML += `
+                    <div class="flex gap-4 mb-4 bg-white/5 p-3 rounded-lg animate-fadeIn border border-white/5">
+                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-md">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-white line-clamp-1">${item.name}</h4>
+                            <p class="text-sivara-accent text-xs font-mono my-1">${finalPrice} ر.س</p>
+                            <div class="flex items-center gap-3">
+                                <button onclick="changeQty(${index}, -1)" class="w-5 h-5 bg-white/10 rounded flex items-center justify-center hover:bg-white/20">-</button>
+                                <span class="text-xs font-bold text-white">${item.quantity}</span>
+                                <button onclick="changeQty(${index}, 1)" class="w-5 h-5 bg-white/10 rounded flex items-center justify-center hover:bg-white/20">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeItem(${index})" class="text-gray-500 hover:text-red-500 self-start"><i class="ph-fill ph-trash"></i></button>
+                    </div>`;
+            });
+            totalEl.innerText = totalPrice.toLocaleString() + ' ر.س';
+        }
+        function changeQty(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) cart.splice(index, 1);
+            updateCartUI();
+        }
+        function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
+
+        window.addEventListener('scroll', () => {
+            const navInner = document.getElementById('navbar-inner');
+            if (window.scrollY > 50) { 
+                navInner.classList.remove('py-3');
+                navInner.classList.add('py-2', 'shadow-lg');
+            } else { 
+                navInner.classList.add('py-3');
+                navInner.classList.remove('py-2', 'shadow-lg');
+            }
+        });
+    </script>
+</body>
+</html>
